@@ -6,6 +6,11 @@ import java.util.Queue;
 import edu.uptc.so.processnmemory.config.Config;
 import edu.uptc.util.TestCallback;
 
+/**
+ * Representación de una CPU
+ * @author Felipe
+ *
+ */
 public class CPU implements Runnable{
 	public Memory memory;
 	public int quantum, unitTime;
@@ -15,24 +20,6 @@ public class CPU implements Runnable{
 	private TestCallback tcb;
 	private Thread thread;
 	private volatile boolean isRunning;
-
-	public CPU(int quantum, int unitTime, Memory memory) {
-		this.thread = new Thread(this);
-		this.processesQ = new LinkedList<Process>();
-		this.quantum = quantum;
-		this.unitTime = unitTime;
-		this.currentTime = 0;
-		this.memory = memory;
-	}
-	
-	public CPU(int quantum, int unitTime) {
-		this.thread = new Thread(this);
-		this.processesQ = new LinkedList<Process>();
-		this.quantum = quantum;
-		this.currentTime = 0;
-		this.unitTime = unitTime;
-		this.memory = null;
-	}
 	
 	public CPU(Memory memory) {
 		this.thread = new Thread(this);
@@ -52,6 +39,10 @@ public class CPU implements Runnable{
 		this.memory = null;
 	}
 
+	/**
+	 * Añade un proceso entrante a la cola del procesador y a la memoria aenlazada
+	 * @param process Proceso entrante
+	 */
 	public void add(Process process) {
 		if (this.processesQ.isEmpty() && this.processing == null) {
 			process.start();
@@ -66,6 +57,10 @@ public class CPU implements Runnable{
 		this.memory.add(process);
 	}
 
+	/**
+	 * Avance a traves del tiempo de la ejecucio ndel procesador.
+	 * Se realiza la planificacion de los procesos.
+	 */
 	public void step() {
 		if (this.processing != null) {
 			if (this.currentTime == this.nextQuantum && !this.processesQ.isEmpty()) {
@@ -134,15 +129,24 @@ public class CPU implements Runnable{
 		this.isRunning = isRunning;
 	}
 	
+	/**
+	 * Inicia al procesador
+	 */
 	public void start() {
 		if(!this.thread.isAlive())
 			this.thread.start();
 	}
 
+	/**
+	 * Detiene el procesador
+	 */
 	public void interrumpt() {
 		this.thread.interrupt();
 	}
 	
+	/**
+	 * Actualiza variables globales de quantum y unidad de tiempo
+	 */
 	public void updateCPU(){
 		this.quantum = Config.QUANTUM;
 		this.unitTime = Config.UNIT_TIME;

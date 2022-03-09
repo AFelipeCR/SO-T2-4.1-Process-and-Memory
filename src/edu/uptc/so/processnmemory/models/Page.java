@@ -1,5 +1,10 @@
 package edu.uptc.so.processnmemory.models;
 
+/**
+ * Representación de una página
+ * @author Felipe
+ *
+ */
 public class Page {
 	public final Process process;
 	private Frame frame;

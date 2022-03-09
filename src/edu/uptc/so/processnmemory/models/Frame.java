@@ -1,5 +1,10 @@
 package edu.uptc.so.processnmemory.models;
 
+/**
+ * Representación de un marco
+ * @author Felipe
+ *
+ */
 public class Frame {
 	private Page page;
 	public final int id, size;

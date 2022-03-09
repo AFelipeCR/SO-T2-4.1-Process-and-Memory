@@ -1,5 +1,10 @@
 package edu.uptc.so.processnmemory.models;
 
+/**
+ * Representación de un segmento en memoria
+ * @author Felipe
+ *
+ */
 public class Segment {
 	public final int id;
 	private Process process;
